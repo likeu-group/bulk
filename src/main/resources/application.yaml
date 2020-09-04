@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: bulk
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/shoponline?useUnicode=true&characterEncoding=utf8&useSSL=false
+    data-username: root
+    data-password: mysqladmin
