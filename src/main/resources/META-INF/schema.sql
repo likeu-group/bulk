@@ -29,7 +29,9 @@ create table bulk_commodity(
     brand_id bigint not null comment '关联品牌',
     category_id bigint not null comment '关联类别',
     create_time timestamp not null default current_timestamp comment '创建时间',
-    modify_time timestamp not null default current_timestamp on update current_timestamp comment '修改时间'
+    modify_time timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
+    primary key(commodity_id),
+    unique key(commodity_name, brand_id)
 )engine=innodb default charset=utf8 comment '商品表';
 
 -- 价格表
