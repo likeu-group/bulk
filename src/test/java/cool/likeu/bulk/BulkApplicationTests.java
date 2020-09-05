@@ -1,4 +1,4 @@
-package cool.likeu;
+package cool.likeu.bulk;
 
 import org.junit.jupiter.api.Test;
 
