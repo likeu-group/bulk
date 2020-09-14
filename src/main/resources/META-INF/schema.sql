@@ -18,6 +18,15 @@ create table bulk_category(
     unique key(category_name)
 )engine=innodb default charset=utf8 comment '商品类别表';
 
+-- 品牌与类别多对多的关系表
+create table bulk_brand_category(
+    brand_category_id bigint not null auto_increment comment '关系表ID',
+    brand_id bigint not null comment '品牌ID',
+    category_id bigint not null comment '类别ID',
+    primary key(brand_category_id),
+    unique key(brand_id, category_id)
+)engine=innodb default charset=utf8 comment '品牌与类别多对多的关系表';
+
 -- 商品信息
 create table bulk_commodity(
     commodity_id bigint not null auto_increment comment '商品ID',
@@ -36,7 +45,8 @@ create table bulk_commodity(
 
 -- 价格表
 create table bulk_price(
-    price_id bigint not null auto_increment comment '价格ID'
+    price_id bigint not null auto_increment comment '价格ID',
+
 );
 
 -- 买家
