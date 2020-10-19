@@ -9,3 +9,7 @@ spring:
     hikari:
       connection-timeout: 60000
       idle-timeout: 30000
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: false
