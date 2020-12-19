@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan({"cool.likeu.bulk.mapper"})
-public class MybatisConfigure {
+public class MybatisConfig {
 
 }
