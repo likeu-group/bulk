@@ -1,6 +1,8 @@
 package cool.likeu.bulk.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cool.likeu.bulk.dao.Brand;
 import cool.likeu.bulk.service.BrandService;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,7 @@ class BrandServiceImplTest {
 	@Test
 	void testRunBrandService() {
 		Brand saveBrand = new Brand();
-		saveBrand.setName("飞利浦");
+		saveBrand.setName("公牛");
 		boolean save = brandService.save(saveBrand);
 		assertTrue(save);
 
@@ -32,5 +34,12 @@ class BrandServiceImplTest {
 				Wrappers.<Brand>lambdaQuery()
 						.eq(Brand::getName, queryName))
 				.forEach(System.out::println);
+	}
+
+	@Test
+	void testPageSelectBrandService() {
+		IPage<Brand> page = new Page<>();
+		IPage<Brand> selectedPage = brandService.page(page);
+		assertNotNull(selectedPage);
 	}
 }
