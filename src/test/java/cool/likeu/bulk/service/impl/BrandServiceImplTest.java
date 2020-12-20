@@ -1,5 +1,8 @@
 package cool.likeu.bulk.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,5 +44,18 @@ class BrandServiceImplTest {
 		IPage<Brand> page = new Page<>();
 		IPage<Brand> selectedPage = brandService.page(page);
 		assertNotNull(selectedPage);
+	}
+
+	@Test
+	void testBatchInsertBrandService() {
+		int size = 50;
+		List<Brand> brandList = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			Brand brand = new Brand();
+			brand.setName("mock_" + i);
+			brandList.add(brand);
+		}
+		boolean isBatchSucceed = brandService.saveBatch(brandList);
+		assertTrue(isBatchSucceed);
 	}
 }
