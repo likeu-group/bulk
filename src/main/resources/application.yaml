@@ -18,3 +18,7 @@ mybatis-plus:
       table-prefix: bulk_
       id-type: auto
     banner: false
+logging:
+  level:
+    cool.likeu.bulk: debug
+    com.baomidou.mybatisplus: debug
