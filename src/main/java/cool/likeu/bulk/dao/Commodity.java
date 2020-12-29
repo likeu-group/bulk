@@ -28,7 +28,7 @@ public class Commodity implements Serializable {
 	@TableField("image_url")
 	private String imageUrl;
 
-	@TableField("branch_id")
+	@TableField("brand_id")
 	private Long brandId;
 
 	@TableField("category_id")
