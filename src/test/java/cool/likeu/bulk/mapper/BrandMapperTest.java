@@ -1,7 +1,8 @@
-package cool.likeu.bulk.dao;
+package cool.likeu.bulk.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import cool.likeu.bulk.dao.Brand;
 import cool.likeu.bulk.mapper.BrandMapper;
 import org.junit.jupiter.api.Test;
 
