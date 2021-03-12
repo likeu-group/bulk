@@ -1,4 +1,4 @@
-package cool.likeu.bulk.configure;
+package cool.likeu.bulk.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
