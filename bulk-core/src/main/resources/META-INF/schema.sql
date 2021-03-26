@@ -1,3 +1,47 @@
+-- ============================= RBAC ============================= --
+-- 用户表
+create table bulk_user
+(
+    user_id     bigint      not null auto_increment comment '用户ID,自动生成',
+    username    varchar(32) not null comment '用户名',
+    password    varchar(32) not null comment '密码',
+    sex         tinyint     not null comment '性别',
+    email       varchar(64) comment '邮箱账号',
+    phone       varchar(20) comment '电话号码',
+    avatar      varchar(1024) comment '头像地址',
+    address     varchar(128) comment '住址',
+    create_time timestamp   not null default current_timestamp comment '创建时间',
+    modify_time timestamp   not null default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (user_id),
+    unique key (username),
+    unique key (email)
+) engine = innodb
+  default charset = utf8 comment '用户表';
+
+-- 角色表
+create table bulk_role
+(
+    role_id     bigint      not null auto_increment comment '角色ID',
+    role_name   varchar(32) not null comment '角色名称',
+    role_desc   varchar(32) not null comment '角色控制项描述',
+    forbidden   tinyint     not null default 0 comment '是否禁用 0: 正常, 1: 禁用',
+    create_time timestamp   not null default current_timestamp comment '创建时间',
+    modify_time timestamp   not null default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (role_id)
+) engine = innodb
+  default charset = utf8mb4 comment '用户角色表';
+
+-- 角色与权限映射表
+create table bulk_user_role
+(
+    id          bigint    not null auto_increment comment '用户与角色映射ID',
+    user_id     bigint    not null comment '用户ID',
+    role_id     bigint    not null comment '角色ID',
+    create_time timestamp not null default current_timestamp comment '创建时间',
+    modify_time timestamp not null default current_timestamp on update current_timestamp comment '创建时间'
+) engine = innodb
+  default charset = utfmb4 comment '';
+
 -- 品牌
 create table bulk_brand
 (
@@ -64,22 +108,6 @@ create table buyer
 
 );
 
--- 用户
-create table bulk_user
-(
-    user_id     bigint      not null auto_increment comment '用户ID,自动生成',
-    username    varchar(32) not null comment '用户名',
-    password    varchar(32) not null comment '密码',
-    email       varchar(64) comment '邮箱账号',
-    phone       varchar(20) comment '电话号码',
-    avatar      varchar(1024) comment '头像地址',
-    address     varchar(128) comment '住址',
-    create_time timestamp   not null default current_timestamp comment '创建时间',
-    modify_time timestamp   not null default current_timestamp on update current_timestamp comment '修改时间',
-    primary key (user_id),
-    unique key (username),
-    unique key (email)
-);
 
 -- 成本
 create table cost
