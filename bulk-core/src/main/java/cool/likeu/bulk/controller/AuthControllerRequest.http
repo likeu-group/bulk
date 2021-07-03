@@ -1,0 +1,17 @@
+###
+GET http://localhost:8080/user/info
+Content-Type: application/json;charset=utf-8
+Access-Token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyZjU2ZjE5ODVlYWE0NmI2ODk2OGRiMjE3NWU0ZmI4MiIsImV4cCI6MTYxODU0Mjg0MH0.eUKTTlw4zwoLg2aopUPJtr5V_hX5MQJOaDf-foIbGTsLGGcInJbGN8E-Z8J8CF8ljNA0El_tpvULQwn6-Q18pA
+###
+
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json;charset=utf-8
+
+{
+  "username": "2f56f1985eaa46b68968db2175e4fb82",
+  "password": "123456"
+}
+
+###
+DELETE http://localhost:8080/auth/logout
+Access-Token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyZjU2ZjE5ODVlYWE0NmI2ODk2OGRiMjE3NWU0ZmI4MiIsImV4cCI6MTYxODQ3NTI4NX0.Gmai0b1lBLDq6XCjneMz2cLhDoqOIPxBnz1wnyJOZz1AWzlabxv_9dIVpXuz1yxXgRQsuDw2Df4ElBRq2xZf9Q

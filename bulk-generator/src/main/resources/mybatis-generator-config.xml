@@ -4,38 +4,40 @@
 		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<context id="bulk_context" targetRuntime="MyBatis3">
-		<!-- 生成mysql带有分页的sql的插件  这个可以自己写 -->
-		<plugin type="generator.MysqlPaginationPlugin" />
+		<!-- TODO (没有该插件) 生成mysql带有分页的sql的插件  这个可以自己写 -->
+<!--		<plugin type="generator.MysqlPaginationPlugin" />-->
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
+		<plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
 		<!-- 自定义的注释规则，继承 DefaultCommentGenerator 重写 一些方法 -->
-		<commentGenerator type="generator.NewbatisGenerator">
-			<!-- 是否去除自动生成日期的注释 true：是 ： false:否 -->
-			<property name="suppressDate" value="true"/>
-			<!-- 是否去除所有自动生成的注释 true：是 ： false:否 -->
-			<property name="suppressAllComments" value="true"/>
-		</commentGenerator>
+<!--		<commentGenerator type="generator.NewbatisGenerator">-->
+<!--			&lt;!&ndash; 是否去除自动生成日期的注释 true：是 ： false:否 &ndash;&gt;-->
+<!--			<property name="suppressDate" value="true"/>-->
+<!--			&lt;!&ndash; 是否去除所有自动生成的注释 true：是 ： false:否 &ndash;&gt;-->
+<!--			<property name="suppressAllComments" value="true"/>-->
+<!--		</commentGenerator>-->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-						connectionURL="jdbc:mysql://127.0.0.1:3306/bulk?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC"
+						connectionURL="jdbc:mysql://127.0.0.1:3307/bulk?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC"
 						userId="root"
-						password="mysqladmin">
+						password="xiaoyu">
 		</jdbcConnection>
 		<!--生成entity类存放位置-->
-		<javaModelGenerator targetPackage="cool.likeu.bulk" targetProject="项目地址到\java （D:\workspace\src\main\java）">
+		<javaModelGenerator targetPackage="cool.likeu.bulk.repo.po" targetProject="D:\workspace\java\bulk\bulk-core\src\main\java">
 			<property name="enableSubPackages" value="true"/>
 			<property name="trimStrings" value="true"/>
 		</javaModelGenerator>
 		<!--生成映射文件存放位置-->
-		<sqlMapGenerator targetPackage="包名（com.generator.test.mapper）" targetProject="项目地址到\java （D:\workspace\src\main\java）">
+		<sqlMapGenerator targetPackage="cool.likeu.bulk.repo.dao" targetProject="D:\workspace\java\bulk\bulk-core\src\main\java">
 			<property name="enableSubPackages" value="true"/>
 		</sqlMapGenerator>
 		<!--生成Dao类存放位置-->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="包名（com.generator.test.dao）"
-							 targetProject="项目地址到\java （D:\workspace\src\main\java）">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="mapper"
+							 targetProject="D:\workspace\java\bulk\bulk-core\src\main\resources">
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
-		<table tableName="表名" domainObjectName="生成实体的类名">
-
-		</table>
+		<table tableName="bulk_user" domainObjectName="UserPO" />
+		<table tableName="bulk_role" domainObjectName="RolePO" />
+		<table tableName="bulk_menu" domainObjectName="MenuPO" />
 	</context>
 </generatorConfiguration>

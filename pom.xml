@@ -25,6 +25,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mybatis-spring.version>2.1.3</mybatis-spring.version>
 		<spring-boot-dependencies.version>2.3.3.RELEASE</spring-boot-dependencies.version>
+		<json-web-token.version>0.9.1</json-web-token.version>
 	</properties>
 
 	<dependencyManagement>
@@ -36,6 +37,11 @@
 				<version>${spring-boot-dependencies.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${json-web-token.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

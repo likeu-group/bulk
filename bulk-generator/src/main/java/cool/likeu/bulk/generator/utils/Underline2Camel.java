@@ -19,12 +19,11 @@ public class Underline2Camel {
 			else if (!line.contains("_") && firstIsUpperCase.length != 0) {
 				if (!firstIsUpperCase[0]) {
 					sb.append(line.substring(0, 1).toLowerCase()).append(line.substring(1));
-					str = sb.toString();
 				}
 				else {
 					sb.append(line.substring(0, 1).toUpperCase()).append(line.substring(1));
-					str = sb.toString();
 				}
+				str = sb.toString();
 			}
 			else if (line.contains("_") && firstIsUpperCase.length == 0) {
 				strArr = line.split("_");

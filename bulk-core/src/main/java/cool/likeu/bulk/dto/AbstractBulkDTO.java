@@ -2,10 +2,9 @@ package cool.likeu.bulk.dto;
 
 import java.io.Serializable;
 
-import lombok.Data;
-
-@Data
 public abstract class AbstractBulkDTO<T> implements Serializable {
+
+	private static final long serialVersionUID = -4188658081705779718L;
 
 	protected T data;
 
@@ -16,4 +15,11 @@ public abstract class AbstractBulkDTO<T> implements Serializable {
 		this.message = message;
 	}
 
+	public T getData() {
+		return data;
+	}
+
+	public String getMessage() {
+		return message;
+	}
 }
