@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cool.likeu.bulk.repo.dao.UserDao">
+
   <resultMap id="BaseResultMap" type="cool.likeu.bulk.repo.po.UserPO">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
@@ -13,6 +14,13 @@
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <collection property="roles" ofType="cool.likeu.bulk.repo.po.RolePO">
+      <id column="role_id" jdbcType="BIGINT" property="roleId" />
+      <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+      <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    </collection>
   </resultMap>
 
   <!-- todo deprecated -->
@@ -103,9 +111,26 @@
 
   <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from bulk_user
-    where user_id = #{userId,jdbcType=BIGINT}
+      u.user_id,
+      u.username,
+      u.password,
+      u.sex,
+      u.status,
+      u.email,
+      u.phone,
+      u.avatar,
+      u.address,
+      u.create_time,
+      u.modify_time,
+      r.role_id,
+      r.role_desc,
+      r.role_name,
+      r.create_time,
+      r.modify_time
+    from bulk_user u
+    inner join bulk_user_role ur on u.user_id = ur.user_id
+    inner join bulk_role r on r.role_id = ur.role_id
+    where u.user_id = #{userId,jdbcType=BIGINT}
   </select>
 
   <delete id="deleteByUserId" parameterType="java.lang.Long">
@@ -200,15 +225,49 @@
 
   <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from bulk_user
+      u.user_id,
+      u.username,
+      u.password,
+      u.sex,
+      u.status,
+      u.email,
+      u.phone,
+      u.avatar,
+      u.address,
+      u.create_time,
+      u.modify_time,
+      r.role_id,
+      r.role_desc,
+      r.role_name,
+      r.create_time,
+      r.modify_time
+    from bulk_user u
+    inner join bulk_user_role ur on u.user_id = ur.user_id
+    inner join bulk_role r on r.role_id = ur.role_id
     where username = #{username,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByEmail" parameterType="java.lang.String" resultMap="lazyLoadRoles">
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
-    from bulk_user
+      u.user_id,
+      u.username,
+      u.password,
+      u.sex,
+      u.status,
+      u.email,
+      u.phone,
+      u.avatar,
+      u.address,
+      u.create_time,
+      u.modify_time,
+      r.role_id,
+      r.role_desc,
+      r.role_name,
+      r.create_time,
+      r.modify_time
+    from bulk_user u
+    inner join bulk_user_role ur on u.user_id = ur.user_id
+    inner join bulk_role r on r.role_id = ur.role_id
     where email = #{email,jdbcType=VARCHAR}
   </select>
 

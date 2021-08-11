@@ -12,7 +12,6 @@
     <result column="menu_type" jdbcType="INTEGER" property="menuType" />
     <result column="menu_order" jdbcType="INTEGER" property="menuOrder" />
     <result column="menu_status" jdbcType="INTEGER" property="menuStatus" />
-    <result column="menu_perms" jdbcType="VARCHAR" property="menuPerms" />
     <result column="menu_method" jdbcType="VARCHAR" property="menuMethod" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
@@ -80,7 +79,7 @@
 
   <sql id="Base_Column_List">
     menu_id, paren_id, menu_icon, menu_name, menu_url, menu_type, menu_order, menu_status,
-    menu_perms, menu_method, create_time, modify_time
+    menu_method, create_time, modify_time
   </sql>
 
   <select id="selectByExample" parameterType="cool.likeu.bulk.repo.po.MenuPOExample" resultMap="BaseResultMap">
@@ -115,7 +114,6 @@
         m.menu_type,
         m.menu_order,
         m.menu_status,
-        m.menu_perms,
         m.menu_method,
         m.create_time,
         m.modify_time
@@ -133,13 +131,13 @@
   <insert id="insert" parameterType="cool.likeu.bulk.repo.po.MenuPO">
     insert into bulk_menu (menu_id, paren_id, menu_icon,
       menu_name, menu_url, menu_type,
-      menu_order, menu_status, menu_perms,
+      menu_order, menu_status,
       menu_method, create_time, modify_time
       )
     values (#{menuId,jdbcType=BIGINT}, #{parenId,jdbcType=BIGINT}, #{menuIcon,jdbcType=VARCHAR},
       #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{menuType,jdbcType=INTEGER},
-      #{menuOrder,jdbcType=INTEGER}, #{menuStatus,jdbcType=INTEGER}, #{menuPerms,jdbcType=VARCHAR},
-      #{menuMethod,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      #{menuOrder,jdbcType=INTEGER}, #{menuStatus,jdbcType=INTEGER}, #{menuMethod,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
       )
   </insert>
 
@@ -169,9 +167,6 @@
       </if>
       <if test="menuStatus != null">
         menu_status,
-      </if>
-      <if test="menuPerms != null">
-        menu_perms,
       </if>
       <if test="menuMethod != null">
         menu_method,
@@ -207,9 +202,6 @@
       </if>
       <if test="menuStatus != null">
         #{menuStatus,jdbcType=INTEGER},
-      </if>
-      <if test="menuPerms != null">
-        #{menuPerms,jdbcType=VARCHAR},
       </if>
       <if test="menuMethod != null">
         #{menuMethod,jdbcType=VARCHAR},
@@ -250,9 +242,6 @@
       <if test="record.menuStatus != null">
         menu_status = #{record.menuStatus,jdbcType=INTEGER},
       </if>
-      <if test="record.menuPerms != null">
-        menu_perms = #{record.menuPerms,jdbcType=VARCHAR},
-      </if>
       <if test="record.menuMethod != null">
         menu_method = #{record.menuMethod,jdbcType=VARCHAR},
       </if>
@@ -278,7 +267,6 @@
       menu_type = #{record.menuType,jdbcType=INTEGER},
       menu_order = #{record.menuOrder,jdbcType=INTEGER},
       menu_status = #{record.menuStatus,jdbcType=INTEGER},
-      menu_perms = #{record.menuPerms,jdbcType=VARCHAR},
       menu_method = #{record.menuMethod,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
@@ -310,9 +298,6 @@
       </if>
       <if test="menuStatus != null">
         menu_status = #{menuStatus,jdbcType=INTEGER},
-      </if>
-      <if test="menuPerms != null">
-        menu_perms = #{menuPerms,jdbcType=VARCHAR},
       </if>
       <if test="menuMethod != null">
         menu_method = #{menuMethod,jdbcType=VARCHAR},

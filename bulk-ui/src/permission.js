@@ -7,7 +7,7 @@ import notification from 'ant-design-vue/es/notification'
 import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { i18nRender } from '@/locales'
-import mockUserInfo from '@/store/modules/mock-user' // mock user info, please remove this line
+// import mockUserInfo from '@/store/modules/mock-user' // mock user info, please remove this line
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -31,8 +31,7 @@ router.beforeEach((to, from, next) => {
           .dispatch('GetInfo')
           .then(res => {
             // TODO 数据格式要改
-            // const roles = res.result && res.result.role
-            const roles = mockUserInfo.role
+            const roles = res.result && res.result.role
             // generate dynamic router
             store.dispatch('GenerateRoutes', { roles }).then(() => {
               // 根据roles权限生成可访问的路由表

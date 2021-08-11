@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>bulk_menu数据库持久化对象</p>
- *
+ * TODO declared menu_perms
  * @since 1.0
  * @author XiaoYu
  */
@@ -33,8 +33,6 @@ public class MenuPO implements Serializable, Comparable<MenuPO> {
     private Integer menuOrder;
 
     private Integer menuStatus;
-
-    private String menuPerms;
 
     private String menuMethod;
 

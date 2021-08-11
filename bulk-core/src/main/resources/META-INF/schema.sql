@@ -26,20 +26,21 @@ create table bulk_user
 -- ---------------
 create table bulk_role
 (
-    role_id     bigint       not null auto_increment comment '角色ID',
-    role_name   varchar(32)  not null comment '角色名称',
-    role_desc   varchar(128) not null comment '角色控制项描述',
-    create_time timestamp    not null default current_timestamp comment '创建时间',
-    modify_time timestamp    not null default current_timestamp on update current_timestamp comment '修改时间',
+    role_id       bigint       not null auto_increment comment '角色ID',
+    role_name     varchar(32)  not null comment '角色名称:别名',
+    role_entity   varchar(32)  not null comment '角色实体',
+    role_describe varchar(128) not null comment '角色控制项描述',
+    create_time   timestamp    not null default current_timestamp comment '创建时间',
+    modify_time   timestamp    not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (role_id),
-    unique key (role_name)
+    unique key (role_entity)
 ) engine = innodb
   default charset = utf8mb4 comment '角色表 RBAC0';
 
 -- ---------------
 -- 用户与角色映射表
 -- ---------------
-create table bulk_user_role
+create table bulk_user_role_relation
 (
     id          bigint    not null auto_increment comment '用户与角色映射ID',
     user_id     bigint    not null comment '用户ID',
@@ -50,6 +51,37 @@ create table bulk_user_role
     unique key (user_id, role_id)
 ) engine = innodb
   default charset = utf8mb4 comment '角色与权限关系映射表';
+
+-- ---------------
+-- 权限表
+-- ---------------
+create table bulk_permission
+(
+    perms_id       bigint       not null auto_increment comment '权限ID',
+    perms_name     varchar(32)  not null comment '',
+    perms_entity   varchar(32)  not null comment '',
+    perms_describe varchar(128) not null comment '',
+    create_time    timestamp    not null default current_timestamp comment '创建时间',
+    modify_time    timestamp    not null default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (perms_id),
+    unique key (perms_entity)
+) engine = innodb
+  default charset = utf8mb4 comment '权限表';
+
+-- ---------------
+-- 角色与权限映射表
+-- ---------------
+create table bulk_role_perms_relation
+(
+    relation_id bigint    not null auto_increment comment 'ID',
+    role_id     bigint    not null comment '角色ID',
+    perms_id    bigint    not null comment '权限ID',
+    create_time timestamp not null default current_timestamp comment '创建时间',
+    modify_time timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (relation_id),
+    unique key (role_id, perms_id)
+) engine = innodb
+  default charset = utf8mb4 comment '角色权限关联表';
 
 -- ---------------
 -- 菜单表
@@ -64,7 +96,6 @@ create table bulk_menu
     menu_type   int(11)              default null comment '菜单类型 0:菜单，1:按钮',
     menu_order  int(11)              default null comment '菜单排序',
     menu_status int(11)              default null comment '是否禁用 0:正常，1:禁用',
-    menu_perms  varchar(512)         default null comment '授权(多个用逗号隔开, 如: user:list, user:create)',
     menu_method varchar(128)         default null comment '菜单http请求方法, 如: GET, POST',
     create_time timestamp   not null default current_timestamp comment '创建时间',
     modify_time timestamp   not null default current_timestamp on update current_timestamp comment '创建时间',
@@ -75,14 +106,15 @@ create table bulk_menu
 -- ---------------
 -- 角色与菜单关联表
 -- ---------------
-create table bulk_role_menu
+create table bulk_role_menu_relation
 (
     id          bigint    not null auto_increment comment '关联表ID',
     role_id     bigint    not null comment '角色ID',
     menu_id     bigint    not null comment '菜单表ID',
     create_time timestamp not null default current_timestamp comment '创建时间',
     modify_time timestamp not null default current_timestamp on update current_timestamp comment '创建时间',
-    primary key (id)
+    primary key (id),
+    unique key (role_id, menu_id)
 ) engine = innodb
   default charset = utf8mb4 comment '角色与菜单关联表';
 -- ============================= RBAC END ============================= --

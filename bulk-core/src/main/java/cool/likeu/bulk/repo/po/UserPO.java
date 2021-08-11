@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
+import org.springframework.lang.Nullable;
+
 /**
  * <p>bulk_user数据库持久化对象, 携带了该用户所拥有的角色集合</p>
  *
@@ -50,6 +52,7 @@ public class UserPO implements Serializable {
 
 	private Date modifyTime;
 
+	@Nullable
 	private List<RolePO> roles;
 
 	public Status convertUserStatus() {

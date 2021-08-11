@@ -10,17 +10,11 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RoleDao {
 
-    long countByExample(RolePOExample example);
-
-    int deleteByExample(RolePOExample example);
-
     int deleteByPrimaryKey(Long roleId);
 
     int insert(RolePO record);
 
     int insertSelective(RolePO record);
-
-    List<RolePO> selectByExample(RolePOExample example);
 
     RolePO selectByPrimaryKey(Long roleId);
 

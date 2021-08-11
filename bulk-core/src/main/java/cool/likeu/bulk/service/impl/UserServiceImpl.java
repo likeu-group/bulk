@@ -16,6 +16,7 @@ import cool.likeu.bulk.security.token.JwtTokenManager;
 import cool.likeu.bulk.service.MenuService;
 import cool.likeu.bulk.service.RoleService;
 import cool.likeu.bulk.service.UserService;
+import cool.likeu.bulk.utils.StringUtils;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
@@ -33,7 +34,6 @@ public class UserServiceImpl implements UserService, RoleService, MenuService {
 
 	private final MenuDao menuDao;
 
-
 	private final JwtTokenManager tokenManager;
 
 	private final AuthenticationManager authenticationManager;
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService, RoleService, MenuService {
 	}
 
 	/**
-	 * TODO 移除lazyLoad, Role加载的问题
 	 *
 	 * @param userId 用户ID
 	 * @return
@@ -60,32 +59,26 @@ public class UserServiceImpl implements UserService, RoleService, MenuService {
 	}
 
 	/**
-	 * TODO 移除lazyLoad, Role加载的问题
+	 * TODO @Cacheable无法缓存时间
 	 *
-	 * @param username 用户名
-	 * @return
+	 * @param username 用户名或邮箱
+	 * @return UserPO
 	 */
 	@Override
 	@Cacheable(cacheNames = "bulk_user", key = "#username")
 	public UserPO lookupUserByUsername(String username) {
+		if (StringUtils.isEmail(username)) {
+			return userDao.selectByEmail(username);
+		}
 		return userDao.selectByUsername(username);
 	}
 
 	@Override
-	public UserPO lookupUserByEmail(String email) {
-		return userDao.selectByEmail(email);
-	}
-
-	@Override
-	public UserPO lookupUserByParseRequestToken(HttpServletRequest request) {
-		String username = tokenManager.getUsernameFromRequest(request);
-		return lookupUserByUsername(username);
-	}
-
-	@Override
 	public String login(final String username, final String password) {
+		// 1. security校验用户用户是否存在，密码是否相同
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(username, password);
+		// 2. 校验用户状态
 		Authentication authentication = authenticationManager.authenticate(authenticationToken);
 		BulkUserDetailsImpl userDetails = (BulkUserDetailsImpl) authentication.getPrincipal();
 

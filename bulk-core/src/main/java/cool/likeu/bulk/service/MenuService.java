@@ -1,7 +1,5 @@
 package cool.likeu.bulk.service;
 
-import java.util.List;
-
 import lombok.Data;
 
 /**

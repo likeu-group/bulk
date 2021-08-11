@@ -2,7 +2,6 @@ import storage from 'store'
 import { login, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
-import mockUserInfo from '@/store/modules/mock-user'
 
 const user = {
   state: {
@@ -39,7 +38,6 @@ const user = {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
           const { message, data } = response
-
           // TODO 定义BulkError code标识符
           if (!data && message) {
             reject(response)
@@ -58,9 +56,8 @@ const user = {
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-          // const data = response.data
-          const data = mockUserInfo
-          // TODO
+          const data = response.data
+          // TODO 完善数据格式, 可能后续接口调用localStorage里的roleInfo格式会不同, 请注意Roles
           if (data.role && data.role.permissions.length > 0) {
             const role = data.role
             role.permissions = data.role.permissions

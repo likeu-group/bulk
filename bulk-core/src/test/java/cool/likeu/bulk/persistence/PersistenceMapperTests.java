@@ -82,7 +82,7 @@ class PersistenceMapperTests {
 		String[] roleTemplate = ROLE_TEMPLATES[globalRandom.nextInt(ROLE_TEMPLATES.length)];
 		RolePO rolePO = new RolePO()
 				.setRoleName(roleTemplate[0])
-				.setRoleDesc(roleTemplate[1]);
+				.setRoleDescribe(roleTemplate[1]);
 
 		int insertResult = roleDao.insertSelective(rolePO);
 		assertEquals(1, insertResult);
@@ -102,28 +102,6 @@ class PersistenceMapperTests {
 	}
 
 	@Test
-	void testDeleteRoleMapperStatement() {
-		RolePOExample whereClause = new RolePOExample();
-		whereClause.createCriteria()
-				.andRoleNameEqualTo("wx_user");
-
-		int deleteResult = roleDao.deleteByExample(whereClause);
-		assertEquals(1, deleteResult);
-	}
-
-	@Test
-	void testSelectRoleMapperStatement() {
-		RolePOExample whereClause = new RolePOExample();
-		whereClause.createCriteria()
-				.andRoleIdBetween(1L, 3L);
-
-		List<RolePO> roles = roleDao.selectByExample(whereClause);
-		assertNotNull(roles, "Role list is null.");
-
-		roles.forEach(System.out::println);
-	}
-
-	@Test
 	void testSelectUserHasRoleMapperStatement() {
 		final long userId = 1;
 		UserPO userPO = userDao.selectByUserId(userId);
@@ -133,28 +111,6 @@ class PersistenceMapperTests {
 		userPO.setRoles(roles);
 
 		System.out.println(userPO);
-	}
-
-	@Test
-	void testInsertUserRoleMappingStatement() {
-		UserPOExample userClause = new UserPOExample();
-		userClause.createCriteria()
-				.andUsernameEqualTo("hello_world");
-
-		List<UserPO> users = userDao.selectByExample(userClause);
-		assertNotNull(users, "User list is null.");
-
-		RolePOExample roleClause = new RolePOExample();
-		roleClause.createCriteria()
-				.andRoleNameEqualTo("sys");
-		List<RolePO> roles = roleDao.selectByExample(roleClause);
-		assertNotNull(roles, "Role list is null.");
-
-		UserPO userPO = users.stream().findFirst().orElseThrow(NullPointerException::new);
-		RolePO rolePO = roles.stream().findFirst().orElseThrow(NullPointerException::new);
-
-		int insertResult = roleDao.insertRoleByUserId(userPO.getUserId(), rolePO.getRoleId());
-		assertEquals(1, insertResult);
 	}
 
 	@Test

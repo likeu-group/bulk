@@ -1,21 +1,14 @@
 spring:
   application:
     name: bulk
+  profiles:
+    active: home-dev
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3307/bulk?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: xiaoyu
     hikari:
       connection-timeout: 60000
       idle-timeout: 30000
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-  redis:
-    database: 0
-    host: 192.168.1.29
-    port: 6379
-    password: 123456
   cache:
     type: redis
 mybatis:
@@ -30,3 +23,29 @@ logging:
     cool.likeu.bulk: debug
     com.baomidou.mybatisplus: debug
     org.springframework.security: debug
+
+---
+spring:
+  profiles: company-dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/bulk?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: xiaoyu
+  redis:
+    database: 0
+    host: 192.168.1.29
+    port: 6379
+    password: 123456
+
+---
+spring:
+  profiles: home-dev
+  datasource:
+    url: jdbc:mysql://192.168.1.6:3306/bulk?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: xiaoyu
+  redis:
+    database: 0
+    host: 192.168.1.6
+    port: 6379
+    password: 123456

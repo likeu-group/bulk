@@ -2,9 +2,12 @@ package cool.likeu.bulk.repo.po;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import org.springframework.lang.Nullable;
 
 /**
  * <p>bulk_role数据库持久化对象</p>
@@ -22,10 +25,15 @@ public class RolePO implements Serializable {
 
     private String roleName;
 
-    private String roleDesc;
+    private String roleEntity;
+
+    private String roleDescribe;
 
     private Date createTime;
 
     private Date modifyTime;
+
+    @Nullable
+    private List<PermissionPO> permsCollections;
 
 }

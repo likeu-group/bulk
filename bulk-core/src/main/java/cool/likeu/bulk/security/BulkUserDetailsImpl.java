@@ -34,6 +34,9 @@ public class BulkUserDetailsImpl implements UserDetails {
 
 	private boolean credentialsNonExpired = true;
 
+	/**
+	 * Authentication超时时常（与缓存挂钩）
+	 */
 	private Duration expireTime;
 
 	public BulkUserDetailsImpl(UserPO userPO) {
