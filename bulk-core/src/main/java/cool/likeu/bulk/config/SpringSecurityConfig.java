@@ -1,5 +1,6 @@
 package cool.likeu.bulk.config;
 
+import cool.likeu.bulk.security.DefaultFilterInvocationSecurityMetadataSource;
 import cool.likeu.bulk.security.token.JwtAuthenticationTokenFilter;
 
 import org.springframework.context.annotation.Bean;
@@ -18,9 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -45,14 +48,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	private final AccessDeniedHandler accessDeniedHandler;
 
-	@Deprecated
+	/**
+	 * AuthorizationManager (授权管理器)
+	 */
 	private final AccessDecisionManager accessDecisionManager;
 
 	private final AuthenticationEntryPoint authenticationEntryPoint;
 
 	private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-	@Deprecated
+	/**
+	 *
+	 */
 	private final FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource;
 
 	public SpringSecurityConfig(
@@ -129,6 +136,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				).permitAll()
 				.anyRequest().authenticated()
 				.and()
+				.rememberMe()
+				.and()
 				.headers().frameOptions().disable()
 				.and()
 				.logout()
@@ -137,7 +146,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(defaultCorsFilter(), JwtAuthenticationTokenFilter.class)
-				.addFilterBefore(defaultCorsFilter(), LogoutFilter.class);
+				.addFilterBefore(defaultCorsFilter(), LogoutFilter.class)
+				.addFilterAfter(customFilterSecurityInterceptor(), FilterSecurityInterceptor.class);
 	}
 
 	@Bean(value = BeanIds.AUTHENTICATION_MANAGER)
@@ -167,4 +177,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		configurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(configurationSource);
 	}
+
+	FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
+		FilterSecurityInterceptor interceptor = new FilterSecurityInterceptor();
+		interceptor.setSecurityMetadataSource(filterInvocationSecurityMetadataSource);
+		interceptor.setAccessDecisionManager(accessDecisionManager);
+		interceptor.setAuthenticationManager(authenticationManager());
+		return interceptor;
+	}
+
+// http://www.semlinker.com/spring-security-remember-me/
+//
+//	/**
+//	 * 还是应该考虑使用rememberMe配合前端使用
+//	 * rememberMe持久化配置
+//	 * @return
+//	 */
+//	@Bean
+//	public PersistentTokenRepository persistentTokenRepository() {
+//		return null;
+//	}
 }

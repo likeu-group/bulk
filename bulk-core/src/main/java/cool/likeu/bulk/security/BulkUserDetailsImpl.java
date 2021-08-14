@@ -1,9 +1,14 @@
 package cool.likeu.bulk.security;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import cool.likeu.bulk.repo.po.RolePO;
 import cool.likeu.bulk.repo.po.UserPO;
 import lombok.Data;
 
@@ -45,9 +50,10 @@ public class BulkUserDetailsImpl implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return userPO.getRoles()
+		return Optional.ofNullable(userPO.getRoles())
+				.orElseGet(ArrayList::new)
 				.stream()
-				.map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+				.map(BulkGrantedAuthority::new)
 				.collect(Collectors.toList());
 	}
 

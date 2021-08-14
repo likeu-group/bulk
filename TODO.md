@@ -7,3 +7,4 @@
 - [ ] 获取角色信息，路由beforeEach调用GetInfo，数据格式问题
 - [ ] Mybatis插件分页
 - [ ] Spring Cache适配(@Cacheable, @CachePut, @cacheEvict)
+- [ ] SpringBoot Security RememberMe(或许可以通过前端cookie的expire time设定)

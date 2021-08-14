@@ -2,7 +2,7 @@ spring:
   application:
     name: bulk
   profiles:
-    active: home-dev
+    active: company-dev
   datasource:
     hikari:
       connection-timeout: 60000

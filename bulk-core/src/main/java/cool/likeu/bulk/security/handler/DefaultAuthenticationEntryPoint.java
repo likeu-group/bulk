@@ -1,6 +1,7 @@
 package cool.likeu.bulk.security.handler;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,6 @@ public class DefaultAuthenticationEntryPoint implements AuthenticationEntryPoint
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		response.setContentType(BulkConstant.MIME_TYPE_APPLICATION_JSON);
-
 		doResponse(response, authException);
 	}
 
@@ -74,7 +74,7 @@ public class DefaultAuthenticationEntryPoint implements AuthenticationEntryPoint
 			failureCauseDTO = BulkResponse.failure(FORBIDDEN, "用户尚未激活!");
 		}
 		else {
-			Throwable causeThrowable = authException.getCause();
+			Throwable causeThrowable = Optional.ofNullable(authException.getCause()).orElse(authException);
 			if (causeThrowable instanceof AuthenticationException) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				failureCauseDTO = BulkResponse.failure(UNAUTHORIZED, "您还未授权!");

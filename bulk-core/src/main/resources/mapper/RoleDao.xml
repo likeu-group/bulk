@@ -5,6 +5,7 @@
   <resultMap id="BaseResultMap" type="cool.likeu.bulk.repo.po.RolePO">
     <id column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="role_entity" jdbcType="VARCHAR" property="roleEntity" />
     <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />

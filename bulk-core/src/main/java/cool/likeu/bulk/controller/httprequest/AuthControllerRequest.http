@@ -1,14 +1,14 @@
 ### get user info
-GET http://localhost:8080/user/info
+GET http://localhost:8080/api/user/info
 Content-Type: application/json;charset=utf-8
-Access-Token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyZjU2ZjE5ODVlYWE0NmI2ODk2OGRiMjE3NWU0ZmI4MiIsImV4cCI6MTYxODU0Mjg0MH0.eUKTTlw4zwoLg2aopUPJtr5V_hX5MQJOaDf-foIbGTsLGGcInJbGN8E-Z8J8CF8ljNA0El_tpvULQwn6-Q18pA
+Access-Token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoZWxsb193b3JsZCIsImV4cCI6MTYyODkxMDcxMX0.S8dvOIPuy9gwZnGh31ChAF-vMi9KvzH43iRHdj6h2Cyb6lexBQ-ZxG5LWyMtLxL8nZo1z49g9_Y89xquj-rRYg
 
 ### user login
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json;charset=utf-8
 
 {
-  "username": "2f56f1985eaa46b68968db2175e4fb82",
+  "username": "hello_world",
   "password": "123456"
 }
 

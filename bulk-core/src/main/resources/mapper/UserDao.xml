@@ -17,6 +17,7 @@
     <collection property="roles" ofType="cool.likeu.bulk.repo.po.RolePO">
       <id column="role_id" jdbcType="BIGINT" property="roleId" />
       <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+      <result column="role_entity" jdbcType="VARCHAR" property="roleEntity" />
       <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
       <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
       <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
@@ -237,8 +238,9 @@
       u.create_time,
       u.modify_time,
       r.role_id,
-      r.role_desc,
       r.role_name,
+      r.role_entity,
+      r.role_describe,
       r.create_time,
       r.modify_time
     from bulk_user u
