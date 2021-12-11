@@ -23,6 +23,10 @@ logging:
     cool.likeu.bulk: debug
     com.baomidou.mybatisplus: debug
     org.springframework.security: debug
+bulk:
+  security:
+    expiration-time: P7D
+    signing-key: 683d57561ce3aa0872c8ebdd700aab2c4a75fd080db36d58288fea1eda95276288340ddcf0baff497fefe6f93fbb26eb7895ef929dfa1dbb11a1273ee6f82fb5
 
 ---
 spring:

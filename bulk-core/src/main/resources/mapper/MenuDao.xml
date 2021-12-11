@@ -5,16 +5,26 @@
   <!-- MenuPO ResultMap -->
   <resultMap id="BaseResultMap" type="cool.likeu.bulk.repo.po.MenuPO">
     <id column="menu_id" jdbcType="BIGINT" property="menuId" />
-    <result column="paren_id" jdbcType="BIGINT" property="parenId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
     <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon" />
     <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
     <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="menu_component" jdbcType="VARCHAR" property="menuComponent" />
     <result column="menu_type" jdbcType="INTEGER" property="menuType" />
     <result column="menu_order" jdbcType="INTEGER" property="menuOrder" />
     <result column="menu_status" jdbcType="INTEGER" property="menuStatus" />
     <result column="menu_method" jdbcType="VARCHAR" property="menuMethod" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <!-- Just establish the relationship between menus and permissions -->
+    <collection property="permissions" ofType="cool.likeu.bulk.repo.po.PermissionPO">
+      <id column="perms_id" jdbcType="BIGINT" property="permsId"/>
+      <result column="perms_name" jdbcType="VARCHAR" property="permsName"/>
+      <result column="perms_entity" jdbcType="VARCHAR" property="permsEntity"/>
+      <result column="perms_describe" jdbcType="VARCHAR" property="permsDescribe"/>
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+      <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </collection>
   </resultMap>
 
   <sql id="Example_Where_Clause">
@@ -121,6 +131,10 @@
     inner join bulk_role_menu brm
     on m.menu_id = brm.menu_id
     where brm.role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="listMenus" resultMap="BaseResultMap">
+
   </select>
 
   <delete id="deleteByMenuId" parameterType="java.lang.Long">

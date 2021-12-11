@@ -52,9 +52,6 @@ public class UserController {
 		if (ObjectUtils.isEmpty(userPO)) {
 			throw new IllegalArgumentException("非法的access-token.");
 		}
-		else {
-
-		}
 
 		UserInformation userInformation = UserInformation.convert(userPO);
 
@@ -62,11 +59,10 @@ public class UserController {
 	}
 
 	/**
-	 * TODO 获取用户菜单
+	 * TODO 2. 获取用户菜单
 	 *
 	 * @param accessToken Access-Token
 	 * @return
-	 * @throws IOException
 	 */
 	@GetMapping("/nav")
 	public BulkResponse<Object> obtainMenusInfo(

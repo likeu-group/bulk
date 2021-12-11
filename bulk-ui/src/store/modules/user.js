@@ -58,6 +58,9 @@ const user = {
         getInfo().then(response => {
           const data = response.data
           // TODO 完善数据格式, 可能后续接口调用localStorage里的roleInfo格式会不同, 请注意Roles
+          // TODO 1. 存role
+          // TODO 2. 存permissions
+          // TODO 3. 存玩家信息
           if (data.role && data.role.permissions.length > 0) {
             const role = data.role
             role.permissions = data.role.permissions

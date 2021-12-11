@@ -1,16 +1,15 @@
 package cool.likeu.bulk.service.impl;
 
+import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
+import cool.likeu.bulk.dto.MenuExposer;
 import cool.likeu.bulk.repo.dao.MenuDao;
 import cool.likeu.bulk.repo.dao.RoleDao;
 import cool.likeu.bulk.repo.dao.UserDao;
 import cool.likeu.bulk.repo.po.MenuPO;
 import cool.likeu.bulk.repo.po.RolePO;
 import cool.likeu.bulk.repo.po.UserPO;
-import cool.likeu.bulk.repo.repository.UserRepository;
 import cool.likeu.bulk.security.BulkUserDetailsImpl;
 import cool.likeu.bulk.security.token.JwtTokenManager;
 import cool.likeu.bulk.service.MenuService;
@@ -29,13 +28,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService, RoleService, MenuService {
 
 	private final UserDao userDao;
-
 	private final RoleDao roleDao;
-
 	private final MenuDao menuDao;
 
 	private final JwtTokenManager tokenManager;
-
 	private final AuthenticationManager authenticationManager;
 
 	public UserServiceImpl(UserDao userDao, RoleDao roleDao, MenuDao menuDao,
@@ -96,7 +92,14 @@ public class UserServiceImpl implements UserService, RoleService, MenuService {
 	}
 
 	@Override
-	public void lookupMenuByRoleId(Long roleId) {
+	public Collection<MenuExposer> exposeMenuByCorrespondRole(Long roleId) {
 		List<MenuPO> menus = menuDao.selectByRoleId(roleId);
+		return null;
+	}
+
+	@Override
+	public Collection<MenuPO> listMenus() {
+		menuDao.listMenus();
+		return null;
 	}
 }

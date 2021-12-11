@@ -88,17 +88,18 @@ create table bulk_role_perms_relation
 -- ---------------
 create table bulk_menu
 (
-    menu_id     bigint      not null auto_increment comment '菜单ID',
-    paren_id    bigint               default null comment '父级菜单ID',
-    menu_icon   varchar(128)         default null comment '菜单图标',
-    menu_name   varchar(64) not null comment '菜单名称',
-    menu_url    varchar(128)         default null comment '菜单路径',
-    menu_type   int(11)              default null comment '菜单类型 0:菜单，1:按钮',
-    menu_order  int(11)              default null comment '菜单排序',
-    menu_status int(11)              default null comment '是否禁用 0:正常，1:禁用',
-    menu_method varchar(128)         default null comment '菜单http请求方法, 如: GET, POST',
-    create_time timestamp   not null default current_timestamp comment '创建时间',
-    modify_time timestamp   not null default current_timestamp on update current_timestamp comment '创建时间',
+    menu_id        bigint      not null auto_increment comment '菜单ID',
+    parent_id      bigint               default null comment '父级菜单ID',
+    menu_icon      varchar(128)         default null comment '菜单图标',
+    menu_name      varchar(64) not null comment '菜单名称',
+    menu_url       varchar(128)         default null comment '菜单路径',
+    menu_component varchar(128)         default null comment '菜单组件(VueComponent)',
+    menu_type      int(11)              default null comment '菜单类型 0:菜单，1:按钮',
+    menu_order     int(11)              default null comment '菜单排序',
+    menu_status    int(11)              default null comment '是否禁用 0:正常，1:禁用',
+    menu_method    varchar(128)         default null comment '菜单http请求方法, 如: GET, POST',
+    create_time    timestamp   not null default current_timestamp comment '创建时间',
+    modify_time    timestamp   not null default current_timestamp on update current_timestamp comment '创建时间',
     primary key (menu_id)
 ) engine = innodb
   default charset = utf8mb4 comment '菜单表';
@@ -117,6 +118,8 @@ create table bulk_role_menu_relation
     unique key (role_id, menu_id)
 ) engine = innodb
   default charset = utf8mb4 comment '角色与菜单关联表';
+
+-- TODO 还需构建menu和permission的关系
 -- ============================= RBAC END ============================= --
 
 -- 品牌

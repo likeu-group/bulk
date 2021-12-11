@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import cool.likeu.bulk.config.props.BulkSecurityProperties;
 import cool.likeu.bulk.security.BulkUserDetailsImpl;
 import cool.likeu.bulk.utils.StringUtils;
 import io.jsonwebtoken.Claims;
@@ -21,18 +22,26 @@ import static cool.likeu.bulk.misc.BulkConstant.SECURITY_ACCESS_TOKEN_HTTP_HEADE
 @Component
 public class JwtTokenManager {
 
+	private final BulkSecurityProperties securityProps;
+
 	private final static String CLAIM_KEY_USERNAME = Claims.SUBJECT;
 
 	/**
 	 * expire time millisecond
 	 */
+	@Deprecated
 	public final static long EXPIRATION_TIME = 24 * 60 * 60 * 1000;
 
 	/**
 	 * secret key(sha512:source:bulk-xsdq-corporation:author@xiaoyu)
 	 */
+	@Deprecated
 	private final static String SECURITY_SIGNING_KEY =
 			"683d57561ce3aa0872c8ebdd700aab2c4a75fd080db36d58288fea1eda95276288340ddcf0baff497fefe6f93fbb26eb7895ef929dfa1dbb11a1273ee6f82fb5";
+
+	public JwtTokenManager(BulkSecurityProperties securityProps) {
+		this.securityProps = securityProps;
+	}
 
 	/**
 	 * <p>创建json web token</p>
@@ -45,8 +54,8 @@ public class JwtTokenManager {
 		claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
 		return Jwts.builder()
 				.setClaims(claims)
-				.setExpiration(new Date(Instant.now().toEpochMilli() + EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512, SECURITY_SIGNING_KEY)
+				.setExpiration(new Date(Instant.now().toEpochMilli() + securityProps.getExpirationMilliseconds()))
+				.signWith(SignatureAlgorithm.HS512, securityProps.getSigningKey())
 				.compact();
 	}
 
@@ -59,8 +68,8 @@ public class JwtTokenManager {
 	public String renewToken(Map<String, Object> claims) {
 		return Jwts.builder()
 				.setClaims(claims)
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512, SECURITY_SIGNING_KEY)
+				.setExpiration(new Date(System.currentTimeMillis() + securityProps.getExpirationMilliseconds()))
+				.signWith(SignatureAlgorithm.HS512, securityProps.getSigningKey())
 				.compact();
 	}
 
@@ -123,7 +132,7 @@ public class JwtTokenManager {
 
 	private Claims getClaimsFromToken(String token) {
 		return Jwts.parser()
-				.setSigningKey(SECURITY_SIGNING_KEY)
+				.setSigningKey(securityProps.getSigningKey())
 				.parseClaimsJws(token)
 				.getBody();
 	}

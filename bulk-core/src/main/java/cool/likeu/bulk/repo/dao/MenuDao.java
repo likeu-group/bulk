@@ -21,9 +21,18 @@ public interface MenuDao {
 
     int insertSelective(MenuPO record);
 
+    /**
+     * <h2>Note: 已废弃，将删除该接口</h2>
+     * @deprecated 不适用这种查询方法
+     * @param example
+     * @return
+     */
+    @Deprecated
     List<MenuPO> selectByExample(MenuPOExample example);
 
     List<MenuPO> selectByRoleId(Long roleId);
+
+    List<MenuPO> listMenus();
 
     MenuPO selectByPrimaryKey(Long menuId);
 

@@ -38,6 +38,7 @@ public class AuthController {
 		final String token = userService.login(userVO.getUsername(), userVO.getPassword());
 		final ObjectNode tokenJsonNode = JacksonUtils.createEmptyJsonNode()
 				.put("token", token)
+				// TODO 未使用application.yaml配置中的expire-time
 				.put("expire", EXPIRATION_TIME);
 		return BulkResponse.success(tokenJsonNode);
 	}

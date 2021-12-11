@@ -8,3 +8,4 @@
 - [ ] Mybatis插件分页
 - [ ] Spring Cache适配(@Cacheable, @CachePut, @cacheEvict)
 - [ ] SpringBoot Security RememberMe(或许可以通过前端cookie的expire time设定)
+- [ ] 构建Menu表和Permission表的关联表
